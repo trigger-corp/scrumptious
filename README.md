@@ -1,8 +1,6 @@
 Scrumptious sample web app
 =================================
 
-Go through all the *.html and replace the sample app ID, 314522715291696, with one you create on Facebook. As you may need to create related Open Graph objects.
-
 Demo: https://scrumpit.herokuapp.com/index.html
 
 ## Getting started
