@@ -1,0 +1,27 @@
+{
+	"author": "amir@trigger.io", 
+	"config_version": "2", 
+	"description": "Scrumptious - a demo app for Facebook based on https://github.com/caabernathy/web-scrumptious",
+	"modules": {
+		"contact": true, 
+		"event": true, 
+		"file": true, 
+		"is": true, 
+		"logging": {
+			"level": "DEBUG"
+		}, 
+		"media": true, 
+		"prefs": true, 
+		"reload": true, 
+		"request": {
+			"permissions": [
+				"http://*/*", 
+				"https://*/*"
+			]
+		}, 
+		"tools": true
+	}, 
+	"name": "Scrumptious",
+	"platform_version": "v1.4", 
+	"version": "0.1"
+}
