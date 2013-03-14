@@ -532,3 +532,15 @@ dl dd ul li { border: none; }
 .ui-mobile-viewport .localnav li {
 	border: none;	
 }
+
+/* TRIGGER.IO Additions */
+.center-wrapper {
+	text-align: center;
+}
+.center-wrapper * {
+	margin: 0 auto;
+}
+.center-button {
+	width: 200px;
+	margin-top: 10px;
+}
