@@ -3,9 +3,17 @@ How to build Scrumptious
 
 Scrumptious is a demo app showing the integration between Trigger.io and Facebook. It let's you post to Facebook with details about your current location and what meal you're eating with whom. You can find out more about our `integration with Facebook <http://docs.trigger.io/en/v1.4/modules/facebook.html>`_ in the documentation. 
 
+This app is based on the Scrumptious web app by Facebook: https://github.com/caabernathy/web-scrumptious. It has been modified to make use of the following Trigger.io features:
+
+	* Native Facebook SDK integration for login, data access and open graph calls: http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
+	* Native topbar and button navigation: http://docs.trigger.io/en/v1.4/modules/topbar.html
+	* Native geolocation (using GPS): http://docs.trigger.io/en/v1.4/modules/geolocation.html
+	* Native notifications: http://docs.trigger.io/en/v1.4/modules/notification.html
+
 Here are the steps to build and test this app on a Mac in the iOS emulator.
 
 The steps to test on Windows / Android are similar and you can find more information here on `Getting started with Trigger.io <http://current-docs.trigger.io/getting-started/index.html>`_.
+
 
 Install the Trigger.io Toolkit
 -------------------------------
@@ -29,6 +37,41 @@ Getting the code
    * git clone https://github.com/trigger-corp/scrumptious.git .
    * cd ..
    * mv identity.json src/
+
+Preparing your own version ready for deployment
+-----------------------------------------------
+
+You will need to create your own Facebook app and host certain files on your webserver to run the app correctly
+
+1. Create a new app at https://developers.facebook.com/apps
+
+	* Define a unique namespace
+	* Specify a site url (in the 'Website with Facebook Login' section) and app domain corresponding to your webserver
+	* Complete the 'Native iOS App' and 'Native Android App' sections, some tips are provided in our documentation here: http://docs.trigger.io/en/v1.4/modules/facebook.html#tips
+	
+2. Configure the requirement Open Graph action and object
+
+	* Follow this tutorial to create the 'eat' action and 'meal' object: https://developers.facebook.com/docs/tutorials/androidsdk/3.0/scrumptious/publish-open-graph-story/
+	
+3. Change the config.json file to reflect your Facebook configuration
+
+	* The "appid" in the "facebook" module configuration needs to reflect your own Facebook appid
+	* The "ios" parameter in the "package_names" module must be the same as the "Bundle ID" you specified in the 'Native iOS App' section when you created your Facebook app
+
+4. Change the code to replace your namespace and urls
+
+	* In 'main.js' replace "/me/trigger-scrumptious:eat" with "/me/<YOUR_NAMESPACE>:eat"
+	* In 'main.js' replace the "https://s3.amazonaws.com/trigger-scrumptious" part of the urls with the path to your own webserver / static file hosting where you will host your object files
+	* In each of the .html files in the 'web' subdirectory, replace the "https://s3.amazonaws.com/trigger-scrumptious" part of the urls with the path to your own webserver / static file hosting where you will host your object files
+	* In each of the .html files in the 'web' subdirectory, replace "trigger-scrumptious:meal" with "<YOUR_NAMESPACE>:meal"
+
+5. Host the necessary resources on your website
+
+	* Deploy all the files in the 'web' subdirectory to your webserver / static file hosting making sure the urls correspond to those in .html files and main.js that you replaced in step 4.
+
+
+Now you're ready to try the app out!
+
 
 Running the app
 ---------------

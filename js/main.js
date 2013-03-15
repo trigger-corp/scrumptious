@@ -60,8 +60,14 @@ var meals = [
 
 // For logging responses
 function logResponse(response) {
+	/* TRIGGER.IO FORGE logging module: 
+	
+			http://docs.trigger.io/en/v1.4/modules/logging.html
+			
+	*/
 	forge.logging.log('The response was:');
 	forge.logging.log(response);
+	
 }
 
 // DOCUMENT-READY FUNCTIONS
@@ -75,8 +81,14 @@ $(function () {
 	$('#cancel-logout-button').click(function() {
 		window.location.hash = '#menu';
 		
+		/* TRIGGER.IO FORGE native topbar UI module: 
+
+				http://docs.trigger.io/en/v1.4/modules/topbar.html
+
+		*/
 		forge.topbar.show();
 		forge.topbar.setTitle('Scrumptious');
+		
 		addLogout();
 	});
 
@@ -119,6 +131,11 @@ $(function () {
 			// Set the currently selected place element
 			currentlySelectedPlaceElement = $(this);
 			
+			/* TRIGGER.IO FORGE native topbar UI module: 
+
+					http://docs.trigger.io/en/v1.4/modules/topbar.html
+
+			*/
 			forge.topbar.addButton({
 				text: 'Done',
 				style: 'done',
@@ -126,6 +143,7 @@ $(function () {
 			}, function() {
 				window.location.hash = '#menu';
 			});
+			
 		} else {
 			// Previously selected place has been deselected
 			$(this).buttonMarkup({ icon: false });
@@ -134,7 +152,13 @@ $(function () {
 			selectedPlaceIndex = -1;
 			$('#select-location').html("Select one");
 			
+			/* TRIGGER.IO FORGE native topbar UI module: 
+
+					http://docs.trigger.io/en/v1.4/modules/topbar.html
+
+			*/
 			forge.topbar.removeButtons();
+			
 			addBack();
 		} 
 	});
@@ -151,6 +175,11 @@ $(function () {
 			// Add to friend ID to selectedFriends associative array
 			selectedFriends[selectionId] = myFriends[selectedIndex].name;
 			
+			/* TRIGGER.IO FORGE native topbar UI module: 
+
+					http://docs.trigger.io/en/v1.4/modules/topbar.html
+
+			*/
 			forge.topbar.addButton({
 				text: 'Done',
 				style: 'done',
@@ -158,6 +187,7 @@ $(function () {
 			}, function() {
 				window.location.hash = '#menu';
 			});
+			
 		} else {
 			// Previously selected friend has been deselected
 			$(this).buttonMarkup({ icon: false });
@@ -180,7 +210,14 @@ $(function () {
 			$('#select-friends').html(friendNameArray[0]);
 		} else {
 			$('#select-friends').html("Select friends");
+			
+			/* TRIGGER.IO FORGE native topbar UI module: 
+
+					http://docs.trigger.io/en/v1.4/modules/topbar.html
+
+			*/
 			forge.topbar.removeButtons();
+			
 			addBack();
 		}
 
@@ -217,31 +254,61 @@ $('body').click(function(e){
 // AUTHENTICATION
 
 function login() {
+	/* TRIGGER.IO FORGE facebook SDK integration: 
+
+			http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
+
+	*/
 	forge.facebook.authorize(['publish_actions'], function(token_information) {
 		logResponse(token_information);
 		window.location.hash = '#menu';
 		
+		/* TRIGGER.IO FORGE native topbar UI module: 
+
+				http://docs.trigger.io/en/v1.4/modules/topbar.html
+
+		*/
 		forge.topbar.show();
 		forge.topbar.setTitle('Scrumptious');
+		
 		addLogout();
 		
 		updateUserInfo();
 	}, function(content) {
+		/* TRIGGER.IO FORGE notification module: 
+
+				http://docs.trigger.io/en/v1.4/modules/notification.html
+
+		*/
 		forge.notification.create("Facebook Login Error", "There was a problem logging into Facebook: "+content.message);
 		window.location.hash = '#login';
 	});
 }
 
 function logout() {
+	/* TRIGGER.IO FORGE facebook SDK integration: 
+
+			http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
+
+	*/
 	forge.facebook.logout(function() {
 		window.location.hash = '#login';
 	}, function(content) {
+		/* TRIGGER.IO FORGE notification module: 
+
+				http://docs.trigger.io/en/v1.4/modules/notification.html
+
+		*/
 		forge.notification.create("Facebook Logout Error", "There was a problem logging into Facebook: "+content.message);
 	});
 }
 
 function updateUserInfo() {
-	
+	/* TRIGGER.IO FORGE facebook SDK integration: 
+
+			http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
+
+	*/
 	forge.facebook.api('/me', { fields: "name,first_name,picture" }, function(response) {
 		logResponse(response);
 		$('#user-info').remove();
@@ -281,6 +348,11 @@ function handlePublishOGError(e) {
 	logResponse("Error publishing ..."+JSON.stringify(e));
 	var errorCode = e.code;
 	logResponse("Error code ..."+errorCode);
+	/* TRIGGER.IO FORGE notification module: 
+
+			http://docs.trigger.io/en/v1.4/modules/notification.html
+
+	*/
 	forge.notification.create("Error posting to Facebook", "Error code: "+errorCode);
 }
 
@@ -313,6 +385,11 @@ function publishOGAction(response) {
 		params.tags = friendIDArrays.join();
 	}
 	logResponse("Publish params " + params);
+	/* TRIGGER.IO FORGE facebook SDK integration: 
+
+			http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
+
+	*/
 	forge.facebook.api("/me/trigger-scrumptious:eat",
 	"POST",
 	params,
@@ -365,6 +442,11 @@ function getNearby() {
 	logResponse("[getNearby] get nearby data.");
 
 	// First use browser's geolocation API to obtain location
+	/* TRIGGER.IO FORGE geolocation module: 
+
+			http://docs.trigger.io/en/v1.4/modules/geolocation.html
+
+	*/
 	forge.geolocation.getCurrentPosition( { enableHighAccuracy: true }, function(location) {
 		//curLocation = location;
 		logResponse(location);
@@ -372,6 +454,11 @@ function getNearby() {
 		// Use graph API to search nearby places
 		var path = '/search?type=place&q=restaurant&center=' + location.coords.latitude + ',' + location.coords.longitude + '&distance=1000&fields=id,name,picture';
 
+		/* TRIGGER.IO FORGE facebook SDK integration: 
+
+				http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
+
+		*/
 		forge.facebook.api(path, function(response) {
 			if (!response || response.error) {
 				logResponse("Error fetching nearby place data.");
@@ -400,6 +487,11 @@ function getFriends() {
 
 	logResponse("[getFriends] get friend data.");
 	// Use the Graph API to get friends
+	/* TRIGGER.IO FORGE facebook SDK integration: 
+
+			http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
+
+	*/
 	forge.facebook.api('/me/friends', { fields: 'name, picture', limit: '50' }, function(response) {
 		if (!response || response.error) {
 			logResponse("Error fetching friend data.");
@@ -422,6 +514,11 @@ function displayFriends(friends) {
 //HANDLE TOPBAR
 
 function addLogout() {
+	/* TRIGGER.IO FORGE native topbar UI module: 
+
+			http://docs.trigger.io/en/v1.4/modules/topbar.html
+
+	*/
 	forge.topbar.removeButtons();
 	forge.topbar.addButton({
 		text: 'Logout',
@@ -433,6 +530,11 @@ function addLogout() {
 }
 
 function addBack() {
+	/* TRIGGER.IO FORGE native topbar UI module: 
+
+			http://docs.trigger.io/en/v1.4/modules/topbar.html
+
+	*/
 	forge.topbar.removeButtons();
 	forge.topbar.addButton({
 		text: 'Back',
@@ -443,6 +545,11 @@ function addBack() {
 }
 
 $(document).bind('pagechange', function() {
+	/* TRIGGER.IO FORGE native topbar UI module: 
+
+			http://docs.trigger.io/en/v1.4/modules/topbar.html
+
+	*/
 	forge.topbar.removeButtons();
 
 	if (location.hash == "#logout" || location.hash == "#login") {
