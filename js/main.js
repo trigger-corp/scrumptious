@@ -22,37 +22,37 @@ var meals = [
 {
 	"id" : "cheeseburger",
 	"title" : "Cheeseburger",
-	"url" : "http://scrumpit.herokuapp.com/cheeseburger.html"
+	"url" : "https://s3.amazonaws.com/trigger-scrumptious/cheeseburger.html"
 },
 {
 	"id" : "chinese",
 	"title" : "Chinese",
-	"url" : "http://scrumpit.herokuapp.com/chinese.html"
+	"url" : "https://s3.amazonaws.com/trigger-scrumptious/chinese.html"
 },
 {
 	"id" : "french",
 	"title" : "French",
-	"url" : "http://scrumpit.herokuapp.com/french.html"
+	"url" : "https://s3.amazonaws.com/trigger-scrumptious/french.html"
 },
 {
 	"id" : "hotdog",
 	"title" : "Hot Dog",
-	"url" : "http://scrumpit.herokuapp.com/hotdog.html"
+	"url" : "https://s3.amazonaws.com/trigger-scrumptious/hotdog.html"
 },
 {
 	"id" : "indian",
 	"title" : "Indian",
-	"url" : "http://scrumpit.herokuapp.com/indian.html"
+	"url" : "https://s3.amazonaws.com/trigger-scrumptious/indian.html"
 },
 {
 	"id" : "italian",
 	"title" : "Italian",
-	"url" : "http://scrumpit.herokuapp.com/italian.html"
+	"url" : "https://s3.amazonaws.com/trigger-scrumptious/italian.html"
 },
 {
 	"id" : "pizza",
 	"title" : "Pizza",
-	"url" : "http://scrumpit.herokuapp.com/pizza.html"
+	"url" : "https://s3.amazonaws.com/trigger-scrumptious/pizza.html"
 },
 ];
 
@@ -163,9 +163,6 @@ $(function () {
 			$(this).buttonMarkup({ icon: false });
 			// Remove the friend id
 			delete selectedFriends[selectionId];
-			
-			forge.topbar.removeButtons();
-			addBack();
 		} 
 		var friendNameArray = [];
 		for (var friendId in selectedFriends) {
@@ -183,6 +180,8 @@ $(function () {
 			$('#select-friends').html(friendNameArray[0]);
 		} else {
 			$('#select-friends').html("Select friends");
+			forge.topbar.removeButtons();
+			addBack();
 		}
 
 		logResponse("Current select friends list: " + selectedFriends);
@@ -314,7 +313,7 @@ function publishOGAction(response) {
 		params.tags = friendIDArrays.join();
 	}
 	logResponse("Publish params " + params);
-	forge.facebook.api("/me/scrumptiousios:eat",
+	forge.facebook.api("/me/trigger-scrumptious:eat",
 	"POST",
 	params,
 	function (response) {
