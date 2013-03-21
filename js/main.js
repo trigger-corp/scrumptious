@@ -1,10 +1,6 @@
 /* TODO 
-- remove requirement for launchimage module
 - populate header image so don't have to hide / show topbar
 - reduce button delay with pagechange */
-
-forge.launchimage.hide();
-forge.topbar.hide();
 
 var DEBUG_MODE = false;
 

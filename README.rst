@@ -3,7 +3,7 @@ How to build Scrumptious
 
 Scrumptious is a demo app showing the integration between Trigger.io and Facebook. It let's you post to Facebook with details about your current location and what meal you're eating with whom. You can find out more about our `integration with Facebook <http://docs.trigger.io/en/v1.4/modules/facebook.html>`_ in the documentation. 
 
-This app is based on the Scrumptious web app by Facebook: https://github.com/caabernathy/web-scrumptious. It has been modified to make use of the following Trigger.io features:
+This app is based on the Scrumptious web app: https://github.com/fbsamples/web-scrumptious. It has been modified to make use of the following Trigger.io features:
 
 	* Native Facebook SDK integration for login, data access and open graph calls: http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
 	* Native topbar and button navigation: http://docs.trigger.io/en/v1.4/modules/topbar.html
@@ -30,6 +30,7 @@ Getting the code
 
    * cd src
    * mv identity.json ..
+   * mv .forgeignore ..
    * rm -rf *
 
 3. Checkout this repository and copy the identity.json file back:
@@ -37,6 +38,7 @@ Getting the code
    * git clone https://github.com/trigger-corp/scrumptious.git .
    * cd ..
    * mv identity.json src/
+   * mv .forgeignore src/
 
 Preparing your own version ready for deployment
 -----------------------------------------------
@@ -53,7 +55,7 @@ You will need to create your own Facebook app and host certain files on your web
 
 	* Follow this tutorial to create the 'eat' action and 'meal' object: https://developers.facebook.com/docs/tutorials/androidsdk/3.0/scrumptious/publish-open-graph-story/
 	
-3. Change the config.json file to reflect your Facebook configuration
+3. Change the src/config.json file to reflect your Facebook configuration
 
 	* The "appid" in the "facebook" module configuration needs to reflect your own Facebook appid
 	* The "ios" parameter in the "package_names" module must be the same as the "Bundle ID" you specified in the 'Native iOS App' section when you created your Facebook app

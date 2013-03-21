@@ -1,7 +1,7 @@
 {
 	"author": "amir@trigger.io", 
 	"config_version": "2", 
-	"description": "Scrumptious - a demo app for Facebook based on https://github.com/caabernathy/web-scrumptious", 
+	"description": "Scrumptious - a demo app for Facebook based on https://github.com/fbsamples/web-scrumptious", 
 	"modules": {
 		"contact": true, 
 		"event": true, 
@@ -11,9 +11,6 @@
 		"file": true, 
 		"geolocation": true, 
 		"is": true, 
-		"launchimage": {
-			"hide-manually": true
-		}, 
 		"logging": {
 			"level": "DEBUG"
 		}, 
