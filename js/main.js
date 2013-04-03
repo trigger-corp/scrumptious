@@ -1,6 +1,7 @@
 /* TODO 
 - populate header image so don't have to hide / show topbar
-- reduce button delay with pagechange */
+- reduce button delay with pagechange 
+- test on Android */
 
 var DEBUG_MODE = false;
 
@@ -68,8 +69,6 @@ function logResponse(response) {
 
 // DOCUMENT-READY FUNCTIONS
 $(function () {
-	
-	login();
 
 	// Click handlers
 	$('#login-button').click(login);
@@ -255,7 +254,7 @@ function login() {
 			http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
 
 	*/
-	forge.facebook.authorize(['publish_actions'], function(token_information) {
+	forge.facebook.authorize(function(token_information) {
 		logResponse(token_information);
 		window.location.hash = '#menu';
 		
@@ -386,18 +385,19 @@ function publishOGAction(response) {
 			http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
 
 	*/
-	forge.facebook.api("/me/trigger-scrumptious:eat",
-	"POST",
-	params,
-	function (response) {
-		logResponse(response);
-		if (!response || response.error) {
-			errorHandler(response.error);
-		} else {
-			handleOGSuccess(response);
-		}
-	}
-);
+	forge.facebook.authorize(['publish_actions'], function(token_information) {
+		forge.facebook.api("/me/trigger-scrumptious:eat",
+		"POST",
+		params,
+		function (response) {
+			logResponse(response);
+			if (!response || response.error) {
+				errorHandler(response.error);
+			} else {
+				handleOGSuccess(response);
+			}
+		});
+	});
 }
 
 function showPublishConfirmation() {
@@ -568,6 +568,8 @@ $(document).bind('pagechange', function() {
 
 	if (location.hash =="#menu") {
 		addLogout();
+	} else if (location.hash =="") {
+		//Do nothing, no buttons
 	} else {
 		addBack();
 	}
