@@ -1,7 +1,4 @@
-/* TODO 
-- populate header image so don't have to hide / show topbar
-- reduce button delay with pagechange 
-- test on Android */
+$.mobile.defaultPageTransition = 'none';
 
 var DEBUG_MODE = false;
 
@@ -59,7 +56,7 @@ var meals = [
 function logResponse(response) {
 	/* TRIGGER.IO FORGE logging module: 
 	
-			http://docs.trigger.io/en/v1.4/modules/logging.html
+			http://current-docs.trigger.io/modules/logging.html
 			
 	*/
 	forge.logging.log('The response was:');
@@ -78,11 +75,10 @@ $(function () {
 		
 		/* TRIGGER.IO FORGE native topbar UI module: 
 
-				http://docs.trigger.io/en/v1.4/modules/topbar.html
+				http://current-docs.trigger.io/modules/topbar.html
 
 		*/
-		forge.topbar.show();
-		forge.topbar.setTitle('Scrumptious');
+		forge.topbar.setTitleImage("images/scrumptious-title-logo-400px-100px.png");
 		
 		addLogout();
 	});
@@ -107,7 +103,7 @@ $(function () {
 	});
 
 	// Place selection click handler
-	$('#places-list').on('click', 'li', function() {
+	$('#places-list').on('click', 'li', function() { 
 		var selectionId = $(this).attr('data-name');
 		logResponse("Selected place " + selectionId);
 
@@ -128,7 +124,7 @@ $(function () {
 			
 			/* TRIGGER.IO FORGE native topbar UI module: 
 
-					http://docs.trigger.io/en/v1.4/modules/topbar.html
+					http://current-docs.trigger.io/modules/topbar.html
 
 			*/
 			forge.topbar.addButton({
@@ -149,7 +145,7 @@ $(function () {
 			
 			/* TRIGGER.IO FORGE native topbar UI module: 
 
-					http://docs.trigger.io/en/v1.4/modules/topbar.html
+					http://current-docs.trigger.io/modules/topbar.html
 
 			*/
 			forge.topbar.removeButtons();
@@ -172,7 +168,7 @@ $(function () {
 			
 			/* TRIGGER.IO FORGE native topbar UI module: 
 
-					http://docs.trigger.io/en/v1.4/modules/topbar.html
+					http://current-docs.trigger.io/modules/topbar.html
 
 			*/
 			forge.topbar.addButton({
@@ -208,7 +204,7 @@ $(function () {
 			
 			/* TRIGGER.IO FORGE native topbar UI module: 
 
-					http://docs.trigger.io/en/v1.4/modules/topbar.html
+					http://current-docs.trigger.io/modules/topbar.html
 
 			*/
 			forge.topbar.removeButtons();
@@ -219,10 +215,6 @@ $(function () {
 		logResponse("Current select friends list: " + selectedFriends);
 	});
 
-});
-
-$(document).bind("mobileinit", function(){
-	$.mobile.defaultPageTransition = 'none';
 });
 
 $( document ).delegate("#meals", "pageinit", function() {
@@ -251,7 +243,7 @@ $('body').click(function(e){
 function login() {
 	/* TRIGGER.IO FORGE facebook SDK integration: 
 
-			http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
+			http://current-docs.trigger.io/modules/facebook.html#modules-facebook
 
 	*/
 	forge.facebook.authorize(function(token_information) {
@@ -260,11 +252,10 @@ function login() {
 		
 		/* TRIGGER.IO FORGE native topbar UI module: 
 
-				http://docs.trigger.io/en/v1.4/modules/topbar.html
+				http://current-docs.trigger.io/modules/topbar.html
 
 		*/
-		forge.topbar.show();
-		forge.topbar.setTitle('Scrumptious');
+		forge.topbar.setTitleImage("images/scrumptious-title-logo-400px-100px.png");
 		
 		addLogout();
 		
@@ -272,7 +263,7 @@ function login() {
 	}, function(content) {
 		/* TRIGGER.IO FORGE notification module: 
 
-				http://docs.trigger.io/en/v1.4/modules/notification.html
+				http://current-docs.trigger.io/modules/notification.html
 
 		*/
 		forge.notification.create("Facebook Login Error", "There was a problem logging into Facebook: "+content.message);
@@ -283,7 +274,7 @@ function login() {
 function logout() {
 	/* TRIGGER.IO FORGE facebook SDK integration: 
 
-			http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
+			http://current-docs.trigger.io/modules/facebook.html#modules-facebook
 
 	*/
 	forge.facebook.logout(function() {
@@ -291,7 +282,7 @@ function logout() {
 	}, function(content) {
 		/* TRIGGER.IO FORGE notification module: 
 
-				http://docs.trigger.io/en/v1.4/modules/notification.html
+				http://current-docs.trigger.io/modules/notification.html
 
 		*/
 		forge.notification.create("Facebook Logout Error", "There was a problem logging into Facebook: "+content.message);
@@ -301,7 +292,7 @@ function logout() {
 function updateUserInfo() {
 	/* TRIGGER.IO FORGE facebook SDK integration: 
 
-			http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
+			http://current-docs.trigger.io/modules/facebook.html#modules-facebook
 
 	*/
 	forge.facebook.api('/me', { fields: "name,first_name,picture" }, function(response) {
@@ -345,7 +336,7 @@ function handlePublishOGError(e) {
 	logResponse("Error code ..."+errorCode);
 	/* TRIGGER.IO FORGE notification module: 
 
-			http://docs.trigger.io/en/v1.4/modules/notification.html
+			http://current-docs.trigger.io/modules/notification.html
 
 	*/
 	forge.notification.create("Error posting to Facebook", "Error code: "+errorCode);
@@ -382,10 +373,10 @@ function publishOGAction(response) {
 	logResponse("Publish params " + params);
 	/* TRIGGER.IO FORGE facebook SDK integration: 
 
-			http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
+			http://current-docs.trigger.io/modules/facebook.html#modules-facebook
 
 	*/
-	forge.facebook.authorize(['publish_actions'], function(token_information) {
+	function publish() {
 		forge.facebook.api("/me/trigger-scrumptious:eat",
 		"POST",
 		params,
@@ -396,6 +387,14 @@ function publishOGAction(response) {
 			} else {
 				handleOGSuccess(response);
 			}
+		});
+	}
+	
+	forge.facebook.hasAuthorized(['publish_actions'], function(token_information) {
+		publish();
+	}, function(content) {
+		forge.facebook.authorize(['publish_actions'], function(token_information) {
+			publish();
 		});
 	});
 }
@@ -440,7 +439,7 @@ function getNearby() {
 	// First use browser's geolocation API to obtain location
 	/* TRIGGER.IO FORGE geolocation module: 
 
-			http://docs.trigger.io/en/v1.4/modules/geolocation.html
+			http://current-docs.trigger.io/modules/geolocation.html
 
 	*/
 	forge.geolocation.getCurrentPosition( { enableHighAccuracy: true }, function(location) {
@@ -452,7 +451,7 @@ function getNearby() {
 
 		/* TRIGGER.IO FORGE facebook SDK integration: 
 
-				http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
+				http://current-docs.trigger.io/modules/facebook.html#modules-facebook
 
 		*/
 		forge.facebook.api(path, function(response) {
@@ -485,7 +484,7 @@ function getFriends() {
 	// Use the Graph API to get friends
 	/* TRIGGER.IO FORGE facebook SDK integration: 
 
-			http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
+			http://current-docs.trigger.io/modules/facebook.html#modules-facebook
 
 	*/
 	forge.facebook.api('/me/friends', { fields: 'name, picture', limit: '50' }, function(response) {
@@ -512,7 +511,7 @@ function displayFriends(friends) {
 function addLogout() {
 	/* TRIGGER.IO FORGE native topbar UI module: 
 
-			http://docs.trigger.io/en/v1.4/modules/topbar.html
+			http://current-docs.trigger.io/modules/topbar.html
 
 	*/
 	forge.topbar.removeButtons();
@@ -521,14 +520,13 @@ function addLogout() {
 		position: 'right'
 	}, function() {
 		window.location.hash = '#logout';
-		forge.topbar.hide();
 	});
 }
 
 function addBack() {
 	/* TRIGGER.IO FORGE native topbar UI module: 
 
-			http://docs.trigger.io/en/v1.4/modules/topbar.html
+			http://current-docs.trigger.io/modules/topbar.html
 
 	*/
 	forge.topbar.removeButtons();
@@ -543,16 +541,10 @@ function addBack() {
 $(document).bind('pagechange', function() {
 	/* TRIGGER.IO FORGE native topbar UI module: 
 
-			http://docs.trigger.io/en/v1.4/modules/topbar.html
+			http://current-docs.trigger.io/modules/topbar.html
 
 	*/
 	forge.topbar.removeButtons();
-
-	if (location.hash == "#logout" || location.hash == "#login") {
-		forge.topbar.hide();
-	} else {
-		forge.topbar.show();
-	}
 	
 	if (location.hash == "#meals") {
 		forge.topbar.setTitle('Select a Meal');
@@ -563,12 +555,12 @@ $(document).bind('pagechange', function() {
 	} else if (location.hash == "#friends") {
 		forge.topbar.setTitle('Select Friends');
 	} else {
-		forge.topbar.setTitle('Scrumptious');
+		forge.topbar.setTitleImage("images/scrumptious-title-logo-400px-100px.png");
 	}
 
 	if (location.hash =="#menu") {
 		addLogout();
-	} else if (location.hash =="") {
+	} else if (location.hash == "" || location.hash =="#login") {
 		//Do nothing, no buttons
 	} else {
 		addBack();

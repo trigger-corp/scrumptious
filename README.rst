@@ -1,14 +1,14 @@
 How to build Scrumptious
 ========================
 
-Scrumptious is a demo app showing the integration between Trigger.io and Facebook. It let's you post to Facebook with details about your current location and what meal you're eating with whom. You can find out more about our `integration with Facebook <http://docs.trigger.io/en/v1.4/modules/facebook.html>`_ in the documentation. 
+Scrumptious is a demo app showing the integration between Trigger.io and Facebook. It let's you post to Facebook with details about your current location and what meal you're eating with whom. You can find out more about our `integration with Facebook <http://current-docs.trigger.io/modules/facebook.html>`_ in the documentation. 
 
 This app is based on the Scrumptious web app: https://github.com/fbsamples/web-scrumptious. It has been modified to make use of the following Trigger.io features:
 
-	* Native Facebook SDK integration for login, data access and open graph calls: http://docs.trigger.io/en/v1.4/modules/facebook.html#modules-facebook
-	* Native topbar and button navigation: http://docs.trigger.io/en/v1.4/modules/topbar.html
-	* Native geolocation (using GPS): http://docs.trigger.io/en/v1.4/modules/geolocation.html
-	* Native notifications: http://docs.trigger.io/en/v1.4/modules/notification.html
+	* Native Facebook SDK integration for login, data access and open graph calls: http://current-docs.trigger.io/modules/facebook.html#modules-facebook
+	* Native topbar and button navigation: http://current-docs.trigger.io/modules/topbar.html
+	* Native geolocation (using GPS): http://current-docs.trigger.io/modules/geolocation.html
+	* Native notifications: http://current-docs.trigger.io/modules/notification.html
 
 Here are the steps to build and test this app on a Mac in the iOS emulator.
 
@@ -49,7 +49,7 @@ You will need to create your own Facebook app and host certain files on your web
 
 	* Define a unique namespace
 	* Specify a site url (in the 'Website with Facebook Login' section) and app domain corresponding to your webserver
-	* Complete the 'Native iOS App' and 'Native Android App' sections, some tips are provided in our documentation here: http://docs.trigger.io/en/v1.4/modules/facebook.html#tips
+	* Complete the 'Native iOS App' and 'Native Android App' sections, some tips are provided in our documentation here: http://current-docs.trigger.io/modules/facebook.html#tips
 	
 2. Configure the requirement Open Graph action and object
 
@@ -78,6 +78,9 @@ Now you're ready to try the app out!
 Running the app
 ---------------
 
-At the command-line, simply run 'forge build ios' and 'forge run ios' while in the app directory.
+For complete details on building / running apps with Trigger.io see our getting started guide:
+http://current-docs.trigger.io/mobile.html
 
-In the Toolkit, select the app and then click the 'iOS' link to build and run it. The first time this will take a minute or so, subsequent incremental builds will be very fast. You'll see the full console output in the Toolkit and the iPhone simulator will start up in a few seconds.
+At the command-line, simply run 'forge build [ios|android]' and 'forge run [ios|android]' while in the app directory. 
+
+In the Toolkit, select the app and then click the 'iOS' or 'Android' links to build and run it. The first time this will take a minute or so, subsequent incremental builds will be very fast. You'll see the full console output in the Toolkit and the iPhone simulator will start up in a few seconds.

@@ -1,36 +1,36 @@
 {
-	"author": "amir@trigger.io", 
-	"config_version": "2", 
-	"description": "Scrumptious - a demo app for Facebook based on https://github.com/fbsamples/web-scrumptious", 
+	"name": "Scrumptious",
+	"description": "Scrumptious - a demo app for Facebook based on https://github.com/fbsamples/web-scrumptious",
+	"author": "amir@trigger.io",
+	"version": "0.1",
+	"platform_version": "v1.4",
 	"modules": {
-		"contact": true, 
-		"event": true, 
+		"contact": true,
+		"event": true,
 		"facebook": {
 			"appid": "466751370060066"
-		}, 
-		"file": true, 
-		"geolocation": true, 
-		"is": true, 
+		},
+		"file": true,
+		"geolocation": true,
+		"is": true,
 		"logging": {
 			"level": "DEBUG"
-		}, 
-		"media": true, 
-		"notification": true, 
+		},
+		"notification": true,
 		"package_names": {
 			"ios": "io.trigger.scrumptious"
-		}, 
-		"prefs": true, 
-		"reload": true, 
+		},
+		"prefs": true,
+		"reload": true,
 		"request": {
 			"permissions": [
-				"http://*/*", 
+				"http://*/*",
 				"https://*/*"
 			]
-		}, 
-		"tools": true, 
+		},
+		"tools": true,
 		"topbar": true
-	}, 
-	"name": "Scrumptious", 
-	"platform_version": "v1.4", 
-	"version": "0.1"
+	},
+	"plugins": {},
+	"config_version": "2"
 }
